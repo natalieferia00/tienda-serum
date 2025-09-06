@@ -1,14 +1,29 @@
-import React from "react";
-import "./HeroCarousel.css"; // Assuming your CSS file is named this
+import React, { useState, useEffect } from "react";
+import "./HeroCarousel.css";
 
 const HeroCarousel = () => {
+  // 👉 Asegúrate de que las imágenes estén en "public" o en "src/assets"
+  const images = ["/fondo1.jpg", "/fondo2.jpg"];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 1000); // 10 segundos
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <section className="hero-carousel">
-      {/* The carousel track now only contains a single image */}
       <div className="carousel-track">
-        <img src="fondo1.jpg" alt="Promoción 1" />
+        <img
+          src={images[currentIndex]}
+          alt={`Promoción ${currentIndex + 1}`}
+        />
       </div>
-      {/* Navigation buttons and indicators have been removed */}
     </section>
   );
 };
