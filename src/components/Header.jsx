@@ -24,7 +24,8 @@ const Header = ({ openCart, openWishlist }) => {
         {/* ❤️ Ahora abre wishlist */}
         <IconButton icon={Heart} onClick={openWishlist} />
         {/* 🛒 Ahora abre carrito */}
-   <IconButton icon={ShoppingCart} onClick={() => navigate("/cart")} />
+        <IconButton icon={ShoppingCart} onClick={openCart} />
+
       </div>
     </header>
   );
