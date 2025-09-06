@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShoppingCart, Heart, Search, ChevronLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const IconButton = ({ icon: Icon, onClick, className = '' }) => (
   <button
@@ -10,14 +11,20 @@ const IconButton = ({ icon: Icon, onClick, className = '' }) => (
   </button>
 );
 
-const Header = ({ showModal }) => {
+const Header = ({ openCart, openWishlist }) => {
+  const navigate = useNavigate();
+
   return (
     <header className="main-header">
-      <IconButton icon={ChevronLeft} onClick={() => showModal('Navegar hacia atrás')} />
+      {/* 🔙 Botón atrás */}
+      
+
       <div className="header-nav">
-        <IconButton icon={Search} onClick={() => showModal('Abrir barra de búsqueda')} />
-        <IconButton icon={Heart} onClick={() => showModal('Abrir lista de deseos')} />
-        <IconButton icon={ShoppingCart} onClick={() => showModal('Ver carrito de compras')} />
+        <IconButton icon={Search} onClick={() => console.log('Buscar...')} />
+        {/* ❤️ Ahora abre wishlist */}
+        <IconButton icon={Heart} onClick={openWishlist} />
+        {/* 🛒 Ahora abre carrito */}
+   <IconButton icon={ShoppingCart} onClick={() => navigate("/cart")} />
       </div>
     </header>
   );

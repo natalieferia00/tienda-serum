@@ -1,0 +1,138 @@
+/* Wishlist.css */
+
+/* Fuente elegante Zara */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Roboto:wght@300;400;500&display=swap');
+
+.wishlist-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 360px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s ease-in-out;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.wishlist-sidebar.open {
+  right: 0;
+}
+
+/* Header */
+.wishlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 1rem;
+}
+
+.wishlist-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: #000;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #000;
+  transition: transform 0.2s ease;
+}
+
+.close-button:hover {
+  transform: rotate(90deg);
+}
+
+/* Texto vacío */
+.empty-text {
+  text-align: center;
+  color: #666;
+  margin-top: 2rem;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+/* Lista */
+.wishlist-list {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Item */
+.wishlist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.wishlist-img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.wishlist-info {
+  flex-grow: 1;
+}
+
+.wishlist-info h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+  margin: 0 0 0.4rem;
+}
+
+.wishlist-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Botón eliminar */
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  color: #000;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: opacity 0.3s ease;
+}
+
+.remove-btn:hover {
+  opacity: 0.6;
+}
+
+/* Scroll limpio */
+.wishlist-list::-webkit-scrollbar {
+  width: 6px;
+}
+.wishlist-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+.wishlist-list::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Responsive: móvil ocupa toda la pantalla */
+@media (max-width: 480px) {
+  .wishlist-sidebar {
+    width: 100%;
+  }
+}

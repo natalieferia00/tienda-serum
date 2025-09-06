@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingCart, Heart, Filter } from 'lucide-react';
+import { ShoppingCart, Heart } from 'lucide-react';
 import './ProductGrid.css';
 
 const IconButton = ({ icon: Icon, onClick }) => (
@@ -8,44 +8,24 @@ const IconButton = ({ icon: Icon, onClick }) => (
   </button>
 );
 
-const ProductGrid = ({ products, showModal }) => {
+const ProductGrid = ({ products, handleAddToCart, handleAddToWishlist }) => {
   return (
     <main className="product-grid">
-      {/* 🔹 Encabezado */}
       <h1 className="grid-title">Productos</h1>
-
-      {/* 🔹 Botón filtro */}
-      <div className="grid-actions-header">
-        <button
-          onClick={() => showModal('Filtrar productos')}
-          className="filter-button"
-        >
-          <Filter size={16} />
-          Filtrar
-        </button>
-      </div>
-
-      {/* 🔹 Grilla de productos */}
       <div className="grid-container">
         {products.map((product) => (
           <div key={product.id} className="grid-item">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="product-image"
-            />
+            <img src={product.image} alt={product.name} className="product-image" />
             <div className="grid-actions">
+              {/* ❤️ Guardar en lista de deseos */}
               <IconButton
                 icon={Heart}
-                onClick={() =>
-                  showModal(`Añadir ${product.name} a favoritos`)
-                }
+                onClick={() => handleAddToWishlist(product)}
               />
+              {/* 🛒 Carrito */}
               <IconButton
                 icon={ShoppingCart}
-                onClick={() =>
-                  showModal(`Añadir ${product.name} al carrito`)
-                }
+                onClick={() => handleAddToCart(product)}
               />
             </div>
           </div>

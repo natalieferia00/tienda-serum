@@ -1,29 +1,14 @@
 import React from "react";
-import "./HeroCarousel.css";
+import "./HeroCarousel.css"; // Assuming your CSS file is named this
 
 const HeroCarousel = () => {
   return (
     <section className="hero-carousel">
+      {/* The carousel track now only contains a single image */}
       <div className="carousel-track">
-        <img
-          src="fondo1.jpg"
-          alt="Promoción 1"
-        />
-        <img
-          src="fondo2.jpg"
-          alt="Promoción 2"
-        />
-        <img
-          src="fondo4.jpg"
-          alt="Promoción 3"
-        />
+        <img src="fondo1.jpg" alt="Promoción 1" />
       </div>
-
-      <div className="carousel-indicators">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      {/* Navigation buttons and indicators have been removed */}
     </section>
   );
 };

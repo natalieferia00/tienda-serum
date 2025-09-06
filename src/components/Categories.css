@@ -1,40 +1,46 @@
-/* --- Estilos de las Categorías --- */
+/* src/components/Categories.css */
+
 .categories {
-  padding: 16px 16px 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eaeaea; /* línea sutil como separador */
 }
 
 .categories-list {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  overflow-x: auto;
-  padding-bottom: 8px;
+  justify-content: center;
+  gap: 1rem; /* separación elegante entre categorías */
+  flex-wrap: wrap; /* responsive */
 }
 
 .category-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 70px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.7rem;
+  color: #222; /* negro Zara */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase; /* estilo Zara */
+  letter-spacing: 1px;
 }
 
-.category-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 9999px;
-  background-color: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.category-item .category-icon {
+  margin-bottom: 0.3rem;
+  color: #444;
+  transition: color 0.3s ease;
 }
 
-.category-icon svg {
-  color: #6b7280;
+.category-item:hover,
+.category-item.active {
+  color: #000; /* negro fuerte al hover */
+}
+
+.category-item:hover .category-icon,
+.category-item.active .category-icon {
+  color: #000;
 }
 
 .category-name {
-  font-size: 12px;
-  margin-top: 8px;
-  text-align: center;
-  color: #6b7280;
+  font-weight: 500;
 }
