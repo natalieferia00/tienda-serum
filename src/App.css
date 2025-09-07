@@ -143,24 +143,23 @@
   border-top: 1px solid #eee;
 }
 
-/* Botón del footer */
 .footer-button {
-  padding: 0.8rem 2rem;
+  display: inline-block;
+  padding: 0.9rem 1.5rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  color: #111;
-  background: #fff;
-  border: 1px solid #222;
-  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  text-decoration: none; /* <- importante para quitar subrayado en <a> */
+  transition: background 0.3s ease;
 }
 
 .footer-button:hover {
-  background: #111;
-  color: #fff;
+  background: #333;
 }
+
 
 /* Botón dentro del modal */
 .modal button {
@@ -178,4 +177,36 @@
 .modal button:hover {
   background: #111;
   color: #fff;
+}
+/* 🔹 Tablets */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* ✅ ya no dos columnas en pantallas angostas */
+    gap: 1rem;
+  }
+
+  .grid-item {
+    max-width: 100%; /* ✅ ocupa todo el ancho disponible */
+  }
+
+  .product-image {
+    height: 220px; /* ✅ más compacta */
+  }
+}
+
+/* 🔹 Celulares pequeños */
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* ✅ solo una columna */
+  }
+
+  .grid-item {
+    width: 100%;
+    max-width: 100%; /* ✅ sin límites */
+    margin: 0 auto;
+  }
+
+  .product-image {
+    height: 200px; /* ✅ más reducida en móviles pequeños */
+  }
 }

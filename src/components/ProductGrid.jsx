@@ -15,18 +15,26 @@ const ProductGrid = ({ products, handleAddToCart, handleAddToWishlist }) => {
       <div className="grid-container">
         {products.map((product) => (
           <div key={product.id} className="grid-item">
-            <img src={product.image} alt={product.name} className="product-image" />
-            <div className="grid-actions">
-              {/* ❤️ Guardar en lista de deseos */}
-              <IconButton
-                icon={Heart}
-                onClick={() => handleAddToWishlist(product)}
-              />
-              {/* 🛒 Carrito */}
-              <IconButton
-                icon={ShoppingCart}
-                onClick={() => handleAddToCart(product)}
-              />
+            {/* Contenedor para la imagen y las acciones */}
+            <div className="product-image-container"> 
+              <img src={product.image} alt={product.name} className="product-image" />
+              <div className="grid-actions">
+                {/* ❤️ Guardar en lista de deseos */}
+                <IconButton
+                  icon={Heart}
+                  onClick={() => handleAddToWishlist(product)}
+                />
+                {/* 🛒 Carrito */}
+                <IconButton
+                  icon={ShoppingCart}
+                  onClick={() => handleAddToCart(product)}
+                />
+              </div>
+            </div>
+            {/* Información del producto (nombre y precio) */}
+            <div className="product-info">
+              <h3 className="product-name">{product.name}</h3>
+              <p className="product-price">${product.price.toFixed(2)}</p>
             </div>
           </div>
         ))}

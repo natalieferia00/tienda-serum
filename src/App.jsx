@@ -20,7 +20,7 @@ const productsData = [
   { id: 3, name: 'Tónico', image: 'tonico.jpg', price: 25.00, category: 'Sérum' },
   { id: 4, name: 'Limpiador Facial', image: 'limpiador.jpg', price: 15.75, category: 'Limpiadores' },
   { id: 5, name: 'Aceite Facial', image: 'aceite.jpg', price: 35.00, category: 'Aceites' },
-  { id: 6, name: 'Mascarilla', image: 'mascarilla.jpg', price: 12.00, category: 'Cremas' },  
+  { id: 6, name: 'Mascarilla', image: 'mascarilla.jpg', price: 12.00, category: 'Cremas' },
 ];
 
 
@@ -34,7 +34,7 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-    const [isSearchOpen, setIsSearchOpen] = useState(false); // ✅ nuevo estado
+  const [isSearchOpen, setIsSearchOpen] = useState(false); // ✅ nuevo estado
 
 
   const showModal = (message) => {
@@ -110,9 +110,9 @@ const App = () => {
                 handleAddToWishlist={handleAddToWishlist}
               />
               <footer className="footer-button-container">
-                <button className="footer-button">
-                  Visitar sitio
-                </button>
+                <a href="mailto:natalieferia1@gmail.com" className="footer-button">
+                  CONTACTANOS
+                </a>
               </footer>
             </>
           }

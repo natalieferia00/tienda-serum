@@ -1,26 +1,43 @@
-/* ShoppingCart.css */
-
-/* Fuente similar a Zara */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Roboto:wght@300;400;500&display=swap');
-
-.shopping-cart {
+/* Overlay oscuro */
+.cart-overlay {
   position: fixed;
   top: 0;
-  right: -100%;
-  width: 380px;
+  left: 0;
+  width: 100%;
   height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-direction: column;
-  transition: right 0.4s ease-in-out;
-  font-family: 'Roboto', sans-serif;
+  justify-content: center;
+  align-items: center;
   z-index: 2000;
+  animation: fadeIn 0.3s ease;
 }
 
-.shopping-cart.open {
-  right: 0;
+/* Modal */
+.cart-modal {
+  background: #fff;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 /* Header */
@@ -35,7 +52,6 @@
 .cart-header h2 {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
-  letter-spacing: 1px;
   color: #000;
 }
 
@@ -54,13 +70,13 @@
 
 /* Carrito vacío */
 .empty-cart {
-  margin-top: 2rem;
+  margin: 2rem 0;
   font-style: italic;
   text-align: center;
   color: #555;
 }
 
-/* Lista de items */
+/* Lista */
 .cart-items-list {
   list-style: none;
   margin: 1.5rem 0;
@@ -139,15 +155,4 @@
 
 .checkout-button:hover {
   background: #333;
-}
-
-/* Scroll estético */
-.cart-items-list::-webkit-scrollbar {
-  width: 6px;
-}
-.cart-items-list::-webkit-scrollbar-thumb {
-  background: #ccc;
-}
-.cart-items-list::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
 }
