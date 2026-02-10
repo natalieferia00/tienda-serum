@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
-
+// Importación de tus componentes
 import Header from './components/Header';
 import HeroCarousel from './components/HeroCarousel';
 import Categories from './components/Categories';
@@ -11,9 +11,11 @@ import ProductGrid from './components/ProductGrid';
 import Modal from './components/Modal';
 import ShoppingCart from './components/ShoppingCart';
 import Wishlist from './components/Wishlist';
-import SearchBar from "./components/SearchBar";
 
+// 1. URL de tu Backend en Render
+const API_URL = "https://serum-backend.onrender.com/api/products";
 
+// 2. Productos Predeterminados (Estructura base)
 const defaultProducts = [
   { id: 1, name: 'Sérum', image: 'serum.jpg', price: 29.99, category: 'Sérum' },
   { id: 2, name: 'Crema Hidratante', image: 'crema.jpg', price: 19.50, category: 'Cremas' },
@@ -24,7 +26,7 @@ const defaultProducts = [
 ];
 
 const App = () => {
-  const [productsData, setProductsData] = useState(defaultProducts); // Iniciamos con los predeterminados
+  const [productsData, setProductsData] = useState(defaultProducts);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [cartItems, setCartItems] = useState([]);
@@ -32,27 +34,29 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-
+  // 🔄 EFECTO DE SINCRONIZACIÓN: Conecta datos locales con IDs y Stock del Backend
   useEffect(() => {
-    const syncStock = async () => {
+    const syncWithBackend = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(API_URL);
         const dbProducts = response.data;
 
-
+        // Mapeamos los productos locales para inyectarles el _id y stock real de MongoDB
         const synced = defaultProducts.map(localProd => {
           const dbMatch = dbProducts.find(dbProd => dbProd.name === localProd.name);
-          return dbMatch ? { ...localProd, _id: dbMatch._id, stock: dbMatch.stock } : localProd;
+          return dbMatch 
+            ? { ...localProd, _id: dbMatch._id, stock: dbMatch.stock } 
+            : localProd;
         });
         
         setProductsData(synced);
+        console.log("✅ Sincronización exitosa con Render y MongoDB Atlas.");
       } catch (error) {
-        console.warn("Backend no disponible, usando stock local temporal.");
+        console.error("❌ Error conectando al backend:", error);
       }
     };
-    syncStock();
+    syncWithBackend();
   }, []);
 
   const showModal = (message) => {
@@ -60,19 +64,19 @@ const App = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => setIsModalOpen(false);
-
- 
+  // 🛒 LÓGICA DE CARRITO CON DESCUENTO DE STOCK REAL
   const handleAddToCart = async (product) => {
+    // Si el producto no se ha sincronizado con el backend, no permitimos la compra
     if (!product._id) {
-        showModal("Error: Producto no sincronizado con el inventario real.");
+        showModal("Error: El producto no se ha sincronizado con el inventario real de la nube.");
         return;
     }
 
     try {
-      
-      await axios.patch(`http://localhost:5000/api/products/${product._id}/stock`, { cantidad: 1 });
+      // Intentamos descontar 1 unidad en la base de datos de MongoDB Atlas
+      await axios.patch(`${API_URL}/${product._id}/stock`, { cantidad: 1 });
 
+      // Si el backend responde OK, actualizamos el estado del carrito
       setCartItems((prevCart) => {
         const exists = prevCart.find((item) => item.id === product.id);
         if (exists) {
@@ -84,7 +88,9 @@ const App = () => {
       });
       setIsCartOpen(true);
     } catch (error) {
-      showModal(error.response?.data?.error || "No hay suficiente stock en bodega.");
+      // Manejo de errores (ej: Stock insuficiente)
+      const errorMsg = error.response?.data?.error || "Error de conexión con el servidor.";
+      showModal(errorMsg);
     }
   };
 
@@ -94,8 +100,7 @@ const App = () => {
 
   const handleAddToWishlist = (product) => {
     setWishlist((prevWishlist) => {
-      const exists = prevWishlist.find((item) => item.id === product.id);
-      if (exists) return prevWishlist;
+      if (prevWishlist.find((item) => item.id === product.id)) return prevWishlist;
       return [...prevWishlist, product];
     });
     setIsWishlistOpen(true);
@@ -115,7 +120,6 @@ const App = () => {
         showModal={showModal}
         openCart={() => setIsCartOpen(true)}
         openWishlist={() => setIsWishlistOpen(true)}
-        openSearch={() => setIsSearchOpen(true)}
       />
 
       <Routes>
@@ -123,7 +127,11 @@ const App = () => {
             <>
               <HeroCarousel />
               <Categories selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-              <ProductGrid products={filteredProducts} handleAddToCart={handleAddToCart} handleAddToWishlist={handleAddToWishlist} />
+              <ProductGrid 
+                products={filteredProducts} 
+                handleAddToCart={handleAddToCart} 
+                handleAddToWishlist={handleAddToWishlist} 
+              />
               <footer className="footer-button-container">
                 <a href="mailto:natalieferia1@gmail.com" className="footer-button">CONTACTANOS</a>
               </footer>
@@ -132,9 +140,23 @@ const App = () => {
         />
       </Routes>
 
-      <ShoppingCart cartItems={cartItems} handleRemoveFromCart={handleRemoveFromCart} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      <Wishlist wishlist={wishlist} handleRemoveFromWishlist={handleRemoveFromWishlist} isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      {/* Widgets de Carrito y Wishlist */}
+      <ShoppingCart 
+        cartItems={cartItems} 
+        handleRemoveFromCart={handleRemoveFromCart} 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+      />
+      
+      <Wishlist 
+        wishlist={wishlist} 
+        handleRemoveFromWishlist={handleRemoveFromWishlist} 
+        isOpen={isWishlistOpen} 
+        onClose={() => setIsWishlistOpen(false)} 
+      />
+
+      {/* Modal de Alertas de Inventario */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2 className="modal-title">Inventario Serum</h2>
         <p className="modal-text">{modalMessage}</p>
       </Modal>
